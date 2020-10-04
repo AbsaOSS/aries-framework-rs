@@ -316,6 +316,7 @@ impl Message {
     }
 
     fn _decrypt_v3_message(&self) -> VcxResult<::messages::payload::PayloadV1> {
+        panic!("_decrypt_v3_message");
         use aries::messages::a2a::A2AMessage;
         use aries::utils::encryption_envelope::EncryptionEnvelope;
         use ::messages::payload::{PayloadTypes, PayloadV1, PayloadKinds};
