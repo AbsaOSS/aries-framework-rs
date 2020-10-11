@@ -297,15 +297,7 @@ impl Message {
         // TODO: must be Result
         let mut new_message = self.clone();
         if let Some(ref payload) = self.payload {
-            let decrypted_payload = match payload {
-                MessagePayload::V2(payload) => Payloads::decrypt_payload_v2(&vk, &payload)
-                    .map(Payloads::PayloadV2)
-            };
-
-            // todo: are all these branches still even possible?
-            if let Ok(decrypted_payload) = decrypted_payload {
-                new_message.decrypted_payload = ::serde_json::to_string(&decrypted_payload).ok();
-            } else if let Ok(decrypted_payload) = self._decrypt_v3_message() {
+            if let Ok(decrypted_payload) = self._decrypt_v3_message() {
                 new_message.decrypted_payload = ::serde_json::to_string(&json!(decrypted_payload)).ok()
             } else {
                 new_message.decrypted_payload = ::serde_json::to_string(&json!(null)).ok();

@@ -192,21 +192,6 @@ pub fn get_proof_request_messages(connection_handle: u32, match_name: Option<&st
     Ok(json!(presentation_requests).to_string())
 }
 
-fn _parse_proof_req_message(message: &Message, my_vk: &str) -> VcxResult<ProofRequestMessage> {
-    let payload = message.payload.as_ref()
-        .ok_or(VcxError::from_msg(VcxErrorKind::InvalidHttpResponse, "Cannot get payload"))?;
-
-    let (request, thread) = Payloads::decrypt(&my_vk, payload)?;
-
-    let mut request: ProofRequestMessage = serde_json::from_str(&request)
-        .map_err(|err| VcxError::from_msg(VcxErrorKind::InvalidHttpResponse, format!("Cannot deserialize proof request: {}", err)))?;
-
-    request.msg_ref_id = Some(message.uid.to_owned());
-    request.thread_id = thread.and_then(|tr| tr.thid.clone());
-
-    Ok(request)
-}
-
 pub fn get_source_id(handle: u32) -> VcxResult<String> {
     HANDLE_MAP.get(handle, |proof| {
         Ok(proof.get_source_id())
