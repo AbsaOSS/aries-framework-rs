@@ -8,30 +8,11 @@ use settings::{get_protocol_type, ProtocolTypes};
 use utils::libindy::crypto;
 
 #[derive(Clone, Deserialize, Serialize, Debug, PartialEq)]
-#[serde(untagged)]
-pub enum Payloads {
-    PayloadV1(PayloadV1),
-    PayloadV2(PayloadV2),
-}
-
-#[derive(Clone, Deserialize, Serialize, Debug, PartialEq)]
 pub struct PayloadV1 {
     #[serde(rename = "@type")]
     pub type_: PayloadTypeV1,
     #[serde(rename = "@msg")]
     pub msg: String,
-}
-
-#[derive(Clone, Deserialize, Serialize, Debug, PartialEq)]
-pub struct PayloadV2 {
-    #[serde(rename = "@type")]
-    pub type_: PayloadTypeV2,
-    #[serde(rename = "@id")]
-    pub id: String,
-    #[serde(rename = "@msg")]
-    pub msg: String,
-    #[serde(rename = "~thread")]
-    pub thread: Thread,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]

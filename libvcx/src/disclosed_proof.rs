@@ -10,7 +10,6 @@ use connection;
 use error::prelude::*;
 use messages::{
     get_message::Message,
-    payload::Payloads,
 };
 use messages::proofs::proof_request::ProofRequestMessage;
 use settings;
